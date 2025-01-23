@@ -44,6 +44,7 @@ const fetch = async (o) => {
         if (o?.url?.startsWith("/") || o?.url?.startsWith(":")) o.url = baseUrl + o.url
         const res = await Request({ ...o, headers: o.headers || _headers, url: o.url })
         debug(res, o?.url?.replace(/\/+$/, '').substring(o?.url?.lastIndexOf('/') + 1));
+        $.log(`${res?.m}\n`);
         if (res?.m.match(/320/)) throw new Error(`用户token错误或已过期`);
         return res;
     } catch (e) {
