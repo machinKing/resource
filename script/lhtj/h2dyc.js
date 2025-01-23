@@ -70,7 +70,7 @@ async function main() {
             const reward_num = await signin(user);
             if ($.ckStatus) {
                 // 抽奖签到
-                await lotterySignin(user)
+                //await lotterySignin(user)
                 // 抽奖
                 //await lotteryClock(user)
                 //查询用户信息
@@ -110,7 +110,7 @@ async function signin(user) {
         }
         let res = await fetch(opts);
         const reward_num = res?.d?.RewardType == 1 ? res?.d?.Content : 0
-        $.log(`${$.doFlag[res?.d?.RewardType == 1]} ${res?.d?.RewardType ? '每日签到: 成功, 获得' + res?.d?.Content + '分' : '每日签到: 今日已签到'+user.token}\n`);
+        $.log(`${$.doFlag[res?.d?.RewardType == 1]} ${res?.d?.RewardType ? '每日签到: 成功, 获得' + res?.d?.Content + '分' : '每日签到: 今日已签到'}\n`);
         return reward_num
     } catch (e) {
         $.log(`⛔️ 每日签到失败！${e}\n`)
