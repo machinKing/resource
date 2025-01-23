@@ -72,14 +72,14 @@ async function main() {
                 // 抽奖签到
                 await lotterySignin(user)
                 // 抽奖
-                await lotteryClock(user)
+                //await lotteryClock(user)
                 //查询用户信息
-                const { nick_name, growth_value, level, head_portrait } = await getUserInfo(user)
+                const { bonus } = await getUserInfo(user)
                 //查询珑珠
-                const { balance } = await getBalance(user)
+                //const { balance } = await getBalance(user)
                 $.avatar = head_portrait;
                 $.title = `本次运行共获得${reward_num}积分`
-                DoubleLog(`当前用户:${nick_name}\n成长值: ${growth_value}  等级: V${level}  珑珠: ${balance}`)
+                DoubleLog(`当前用户:${nick_name}\n成长值: ${bonus}`)
             } else {
                 DoubleLog(`⛔️ 「${user.userName ?? `账号${index}`}」check ck error!`)
             }
@@ -193,7 +193,7 @@ async function getUserInfo(user) {
         let res = await fetch(opts);
         let Bonus = res?.d?.Bonus || 0;
         $.log(`🎉 ${res?.m == '1' ? '您当前积分值: ' + Bonus : res?.e}\n`);
-        return res?.data
+        return res?.d?.Bonus
     } catch (e) {
         $.log(`⛔️ 查询用户信息失败！${e}\n`)
     }
