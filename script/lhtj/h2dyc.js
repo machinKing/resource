@@ -45,7 +45,7 @@ const fetch = async (o) => {
         const res = await Request({ ...o, headers: o.headers || _headers, url: o.url })
         debug(res, o?.url?.replace(/\/+$/, '').substring(o?.url?.lastIndexOf('/') + 1));
         $.log(`${res?.m}\n`);
-        if (res?.m.match(/320/)) throw new Error(`用户token错误或已过期`);
+        if (res?.m.toString().match(/320/)) throw new Error(`用户token错误或已过期`);
         return res;
     } catch (e) {
         $.ckStatus = false;
