@@ -95,29 +95,22 @@ async function main() {
 async function signin(user) {
     try {
         const opts = {
-            url: "https://gw2c-hw-open.longfor.com/lmarketing-task-api-mvc-prod/openapi/task/v1/signature/clock",
+            url: "https://m.mallcoo.cn/api/user/User/CheckinV2",
             headers: {
-                'cookie': user.cookie,
                 'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
-                'token': user.token,
-                'x-lf-dxrisk-token': user['x-lf-dxrisk-token'],
-                'x-gaia-api-key': 'c06753f1-3e68-437d-b592-b94656ea5517',
-                'x-lf-bu-code': user['x-lf-bu-code'],
-                'x-lf-channel': user['x-lf-channel'],
-                'origin': 'https://longzhu.longfor.com',
-                'referer': 'https://longzhu.longfor.com/',
-                'x-lf-dxrisk-source': user['x-lf-dxrisk-source'],
-                'x-lf-usertoken': user['x-lf-usertoken']
+                'origin': 'https://m.mallcoo.cn',
+                'referer': 'https://m.mallcoo.cn',
             },
             type: 'post',
             dataType: "json",
             body: {
-                'activity_no': '11111111111686241863606037740000'
+                'MallID': '10669',
+                "Header":{"Token":user.token+",15047","systemInfo":{"model":"SM-G930L","SDKVersion":"2.26.2","system":"Android 7.1.2","version":"8.0.27","miniVersion":"2.71.0"}}
             }
         }
         let res = await fetch(opts);
-        const reward_num = res?.data?.is_popup == 1 ? res?.data?.reward_info[0]?.reward_num : 0
-        $.log(`${$.doFlag[res?.data?.is_popup == 1]} ${res?.data?.is_popup == 1 ? '每日签到: 成功, 获得' + res?.data?.reward_info[0]?.reward_num + '分' : '每日签到: 今日已签到'}\n`);
+        const reward_num = res?.d?.RewardType == 1 ? res?.d?.Content : 0
+        $.log(`${$.doFlag[res?.d?.RewardType == 1]} ${res?.d?.RewardType ? '每日签到: 成功, 获得' + res?.d?.Content + '分' : '每日签到: 今日已签到'}\n`);
         return reward_num
     } catch (e) {
         $.log(`⛔️ 每日签到失败！${e}\n`)
@@ -187,24 +180,19 @@ async function lotteryClock(user) {
 async function getUserInfo(user) {
     try {
         const opts = {
-            url: "https://longzhu-api.longfor.com/lmember-member-open-api-prod/api/member/v1/mine-info",
+            url: "https://m.mallcoo.cn/api/user/user/GetUserAndMallCard",
             headers: {
                 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
-                'Referer': 'https://servicewechat.com/wx50282644351869da/424/page-frame.html',
-                'token': user.token,
-                'X-Gaia-Api-Key': 'd1eb973c-64ec-4dbe-b23b-22c8117c4e8e'
+                'Referer': 'https://m.mallcoo.cn',
+                'token': user.token
             },
             type: 'post',
             dataType: "json",
-            body: {
-                "channel": user['x-lf-channel'],
-                "bu_code": user['x-lf-bu-code'],
-                "token": user.token
-            }
+            body: {"MallId":10669,"Header":{"Token":user.token+",15047","systemInfo":{"model":"SM-G930L","SDKVersion":"2.26.2","system":"Android 7.1.2","version":"8.0.27","miniVersion":"2.71.0"}}}
         }
         let res = await fetch(opts);
-        let growth_value = res?.data?.growth_value || 0;
-        $.log(`🎉 ${res?.code == '0000' ? '您当前成长值: ' + growth_value : res?.message}\n`);
+        let Bonus = res?.d?.Bonus || 0;
+        $.log(`🎉 ${res?.m == '1' ? '您当前积分值: ' + Bonus : res?.e}\n`);
         return res?.data
     } catch (e) {
         $.log(`⛔️ 查询用户信息失败！${e}\n`)
@@ -243,18 +231,12 @@ async function getCookie() {
     try {
         if ($request && $request.method === 'OPTIONS') return;
 
-        const header = ObjectKeys2LowerCase($request.headers);
+        const body = ObjectKeys2LowerCase($request.body);
         if (!header.cookie) throw new Error("获取Cookie错误，值为空");
 
         const newData = {
             "userName": '微信用户',
-            'x-lf-dxrisk-token': header['x-lf-dxrisk-token'],
-            "x-lf-channel": header['x-lf-channel'],
-            "token": header.token,
-            'x-lf-usertoken': header['x-lf-usertoken'],
-            "cookie": header.cookie,
-            "x-lf-bu-code": header['x-lf-bu-code'],
-            'x-lf-dxrisk-source': header['x-lf-dxrisk-source']
+            'token': body.get('Header').get('Token')
         }
         const index = userCookie.findIndex(e => e.token == newData.token);
         index !== -1 ? userCookie[index] = newData : userCookie.push(newData);
