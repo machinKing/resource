@@ -233,11 +233,11 @@ async function getCookie() {
         if ($request && $request.method === 'OPTIONS') return;
 
         const body = ObjectKeys2LowerCase($request.body);
-        if (!body.get('Header').get('Token')) throw new Error("获取Cookie错误，值为空");
+        if (!body.get('header').get('token')) throw new Error("获取Cookie错误，值为空");
 
         const newData = {
             "userName": '微信用户',
-            'token': body.get('Header').get('Token')
+            'token': body.get('header').get('token')
         }
         const index = userCookie.findIndex(e => e.token == newData.token);
         index !== -1 ? userCookie[index] = newData : userCookie.push(newData);
