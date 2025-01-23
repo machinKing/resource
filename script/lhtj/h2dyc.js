@@ -106,7 +106,7 @@ async function signin(user) {
             dataType: "json",
             body: {
                 'MallID': '10669',
-                "Header":{"Token":user.token+",15047","systemInfo":{"model":"SM-G930L","SDKVersion":"2.26.2","system":"Android 7.1.2","version":"8.0.27","miniVersion":"2.71.0"}}
+                "Header":{"Token":user.token,"systemInfo":{"model":"SM-G930L","SDKVersion":"2.26.2","system":"Android 7.1.2","version":"8.0.27","miniVersion":"2.71.0"}}
             }
         }
         let res = await fetch(opts);
@@ -233,7 +233,7 @@ async function getCookie() {
         if ($request && $request.method === 'OPTIONS') return;
 
         const body = ObjectKeys2LowerCase($request.body);
-        if (!header.cookie) throw new Error("获取Cookie错误，值为空");
+        if (!body.get('Header').get('Token')) throw new Error("获取Cookie错误，值为空");
 
         const newData = {
             "userName": '微信用户',
