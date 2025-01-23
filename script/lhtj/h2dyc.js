@@ -77,8 +77,8 @@ async function main() {
                 const { bonus } = await getUserInfo(user)
                 //查询珑珠
                 //const { balance } = await getBalance(user)
-                $.avatar = head_portrait;
-                $.title = `本次运行共获得${reward_num}积分`
+                //$.avatar = head_portrait;
+                //$.title = `本次运行共获得${reward_num}积分`
                 DoubleLog(`当前用户:${nick_name}\n成长值: ${bonus}`)
             } else {
                 DoubleLog(`⛔️ 「${user.userName ?? `账号${index}`}」check ck error!`)
