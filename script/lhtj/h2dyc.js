@@ -44,7 +44,7 @@ const fetch = async (o) => {
         if (o?.url?.startsWith("/") || o?.url?.startsWith(":")) o.url = baseUrl + o.url
         const res = await Request({ ...o, headers: o.headers || _headers, url: o.url })
         debug(res, o?.url?.replace(/\/+$/, '').substring(o?.url?.lastIndexOf('/') + 1));
-        if (res?.message.match(/登录已过期|用户未登录/)) throw new Error(`用户需要去登录`);
+        if (res?.message.match(/用户token错误或已过期/)) throw new Error(`用户需要去登录`);
         return res;
     } catch (e) {
         $.ckStatus = false;
