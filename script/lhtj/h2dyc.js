@@ -244,7 +244,7 @@ async function getCookie() {
         $.setjson(userCookie, ckName);
         $.msg($.name, `🎉获取Cookie成功!`, ``)
     } catch (e) {
-        $.msg(`获取token失败`);
+        $.msg(`获取token失败`, ${e});
         throw e;
     }
 }
