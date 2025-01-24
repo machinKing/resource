@@ -27,8 +27,6 @@ hostname = gw2c-hw-open.longfor.com
 const $ = new Env("龙湖天街dyc");
 const ckName = "lhtj_data";
 const userCookie = $.toObj($.isNode() ? process.env[ckName] : $.getdata(ckName)) || [];
-const bodyname = "token";
-const body = {};
 //notify
 const notify = $.isNode() ? require('./sendNotify') : '';
 $.notifyMsg = []
@@ -235,8 +233,7 @@ async function getCookie() {
         if ($request && $request.method === 'OPTIONS') return;
 
         const body = ObjectKeys2LowerCase($request.body);
-        $.setjson(bodyname, body);
-        $.msg($.body, `这个是body`, ``)
+        $.msg(`成功运行到这里了`)
         if (!body['header']['token']) throw new Error("获取Cookie错误，值为空");
 
         const newData = {
@@ -248,7 +245,6 @@ async function getCookie() {
         $.setjson(userCookie, ckName);
         $.msg($.name, `🎉获取Cookie成功!`, ``)
     } catch (e) {
-        $.logErr(e);
         $.msg(`获取token失败`, e.message || e);
         throw e;
     }
