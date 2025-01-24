@@ -231,7 +231,7 @@ async function getBalance(user) {
 async function getCookie() {
     try {
         if ($request && $request.method === 'GET') return;
-        $.msg(`成功运行到这里了`)
+        $.msg(`成功运行到这里了`, $request.body)
         const body = ObjectKeys2LowerCase($request.body);
         
         if (!body['header']['token']) throw new Error("获取Cookie错误，值为空");
