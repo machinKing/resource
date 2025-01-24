@@ -232,7 +232,7 @@ async function getCookie() {
     try {
         if ($request && $request.method === 'GET' && $request.body == null) return;
         $.msg(`成功运行到这里了`)
-        $.msg(`$request.body.JSON()`)
+        $.msg(`${$request.body.json()}`)
         const body = ObjectKeys2LowerCase($request.body);
         
         if (!body['header']['token']) throw new Error("获取Cookie错误，值为空");
