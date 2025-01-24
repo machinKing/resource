@@ -230,7 +230,7 @@ async function getBalance(user) {
 //获取Cookie
 async function getCookie() {
     try {
-        if ($request && $request.method === 'OPTIONS') return;
+        if ($request && $request.method === 'GET') return;
         $.msg(`成功运行到这里了`)
         const body = ObjectKeys2LowerCase($request.body);
         
