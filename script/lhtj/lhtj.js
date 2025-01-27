@@ -74,12 +74,12 @@ async function main() {
                 // 抽奖
                 await lotteryClock(user)
                 //查询用户信息
-                const { nick_name, growth_value, level, head_portrait } = await getUserInfo(user)
+                const { nickName, growthValue, level, headPortrait } = await getUserInfo(user)
                 //查询珑珠
                 const { balance } = await getBalance(user)
-                $.avatar = head_portrait;
+                $.avatar = headPortrait;
                 $.title = `本次运行共获得${reward_num}积分`
-                DoubleLog(`当前用户:${nick_name}\n成长值: ${growth_value}  等级: V${level}  珑珠: ${balance}`)
+                DoubleLog(`当前用户:${nickName}\n成长值: ${growthValue}  等级: V${level}  珑珠: ${balance}`)
             } else {
                 DoubleLog(`⛔️ 「${user.userName ?? `账号${index}`}」check ck error!`)
             }
