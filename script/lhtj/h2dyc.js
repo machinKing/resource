@@ -231,15 +231,16 @@ async function getBalance(user) {
 //获取Cookie
 async function getCookie() {
     try {
-        if ($request && $request.method === 'GET' && typeof($request.body.Header?) == 'undefined') return;
-        $.msg(`成功运行到这里了`)
+        if ($request && $request.method === 'GET' && typeof($request.body) == 'undefined') return;
+        $.msg(`请求有效`)
         const body = ObjectKeys2LowerCase($request.body);
-        
-        if (!$request.body.header.token) throw new Error("获取Cookie错误，值为空");
+        $.msg(`大小写转换完毕`)
+        if (typeof(body.header) == 'undefined') return;
+        if (!body.header.token) throw new Error("获取Cookie错误，值为空");
 
         const newData = {
             "userName": '微信用户',
-            'token': $request.body.header.token
+            'token': body.header.token
         }
         const index = userCookie.findIndex(e => e.token == newData.token);
         index !== -1 ? userCookie[index] = newData : userCookie.push(newData);
