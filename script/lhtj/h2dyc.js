@@ -232,14 +232,13 @@ async function getCookie() {
     try {
         if ($request && $request.method === 'GET' && $request.body == null) return;
         $.msg(`成功运行到这里了`)
-        $.msg(`${$request.body.json()}`)
-        const body = ObjectKeys2LowerCase($request.body);
+        // const body = ObjectKeys2LowerCase($request.body);
         
-        if (!body['header']['token']) throw new Error("获取Cookie错误，值为空");
+        if (!$request.body.Header.Token) throw new Error("获取Cookie错误，值为空");
 
         const newData = {
             "userName": '微信用户',
-            'token': body['header']['token']
+            'token': $request.body.Header.Token
         }
         const index = userCookie.findIndex(e => e.token == newData.token);
         index !== -1 ? userCookie[index] = newData : userCookie.push(newData);
