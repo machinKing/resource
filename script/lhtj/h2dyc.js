@@ -231,7 +231,8 @@ async function getBalance(user) {
 //获取Cookie
 async function getCookie() {
     try {
-        if ($request && $request.method === 'GET' && typeof($request.body) == 'undefined') return;
+        if ($request && $request.method === 'GET') return;
+        if (typeof($request.body) == 'undefined') return;
         $.msg(`请求有效`)
         const body = ObjectKeys2LowerCase($request.body);
         $.msg(`大小写转换完毕`)
