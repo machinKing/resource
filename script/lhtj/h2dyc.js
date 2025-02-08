@@ -231,7 +231,7 @@ async function getBalance(user) {
 //获取Cookie
 async function getCookie() {
     try {
-        if ($request && $request.method === 'GET' && typeof($request.body.Header) == 'undefined') return;
+        if ($request && $request.method === 'GET' && typeof($request.body.Header?) == 'undefined') return;
         $.msg(`成功运行到这里了`)
         // const body = ObjectKeys2LowerCase($request.body);
         
