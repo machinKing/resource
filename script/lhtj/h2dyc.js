@@ -112,7 +112,7 @@ async function signin(user) {
         let res = await fetch(opts);
         const reward_num = res?.d?.RewardType == 1 ? res?.d?.Content : 0
         $.log(`${$.doFlag[res?.d?.RewardType == 1]} ${res?.d?.RewardType ? '每日签到: 成功, 获得' + res?.d?.Content + '分' : '每日签到: 今日已签到'}\n`);
-        $.log(`${user.token}`)
+        // $.log(`${user.token}`)
         return reward_num
     } catch (e) {
         $.log(`⛔️ 每日签到失败！${e}\n`)
@@ -231,7 +231,7 @@ async function getBalance(user) {
 //获取Cookie
 async function getCookie() {
     try {
-        if ($request && $request.method === 'GET' && $request.body == null) return;
+        if ($request && $request.method === 'GET' && typeof($request.body) == 'undefined') return;
         $.msg(`成功运行到这里了`)
         // const body = ObjectKeys2LowerCase($request.body);
         
